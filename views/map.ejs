@@ -2,7 +2,14 @@
 
 <body>
 	<div>
-		<img src="campus_map.jpg" alt="Campus Map" />
+		<img id = "map" src="campus_map.jpg" alt="Campus Map" />
 	</div>
+
+	<script>
+		document.getElementById('map').onclick = function() {
+			alert('click!');			
+			click_emitter.emit('mouse_click');
+		}
+	</script>
 
 <% include footer.ejs %>

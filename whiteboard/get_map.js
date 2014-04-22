@@ -6,5 +6,11 @@ It then loads a map of campus with all the whiteboard locations marked (and clic
 module.exports = function(req, res) {
 	// db stuff should go here
 
-	res.render('map.ejs', { title : "Campus Map" });
+	EventEmitter = require('events').EventEmitter;
+	emitter = new EventEmitter();
+	emitter.on('mouse_click', function(x, y) {
+		console.log('X: ' + x + 'Y: ' + y);
+	})
+
+	res.render('map.ejs', { title : "Campus Map", click_emitter : emitter });
 };
