@@ -22,7 +22,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 //app.use(express.bodyParser());
 //app.use(express.methodOverride());
 
-
 /*
 	Pages needed:
 		'/'	-	the campus map (get)
