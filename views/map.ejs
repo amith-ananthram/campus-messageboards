@@ -1,15 +1,51 @@
 <% include header.ejs %>
 
-<body>
-	<div>
-		<img id = "map" src="campus_map.png" alt="Campus Map" />
-	</div>
+<script type="text/javascript">
+	/*
+		Pre-loads the images so they can be drawn in order.
+	*/
+	function loadImages() {
+		var sources = ["campus_map.png", "icon.png"]
+		var images = {};
+		var loadedImages = 0;
 
-	<script>
-		document.getElementById('map').onclick = function() {
-			alert('click!');			
-			click_emitter.emit('mouse_click');
+		for (var src in sources) {
+			images[src] = new Image();
+			images[src].onload = function() {
+				if(++loadedImages >= 2) {
+					draw(images, current_whiteboards);
+				}
+			};
+			images[src].src = sources[src];
 		}
-	</script>
+	}
+
+	/*
+		Draws the map and all the current whiteboard locations onto the canvas.
+	*/
+	function draw(images) {
+		var canvas = document.getElementById('canvas');
+		var ctx = canvas.getContext('2d');
+
+		ctx.canvas.width = window.innerWidth;
+		ctx.canvas.height = window.innerHeight;
+
+		ctx.drawImage(images[0], 0, 0, window.innerWidth, window.innerHeight);
+
+		var current_whiteboards = [[0,0]];
+		console.log(current_whiteboards.length);
+
+		for (var i = 0; i < current_whiteboards.length; i++) {
+			var x = current_whiteboards[i][0];
+			var y = current_whiteboards[i][1];
+
+			ctx.drawImage(images[1], x + 10, y + 20, 20, 20);
+		}
+	}
+</script>
+</head>
+
+<body>
+	<canvas id="canvas"></canvas>
 
 <% include footer.ejs %>
