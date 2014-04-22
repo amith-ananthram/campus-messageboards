@@ -6,5 +6,5 @@ It then loads a map of campus with all the whiteboard locations marked (and clic
 module.exports = function(req, res) {
 	// db stuff should go here
 
-	res.render('map.ejs');
+	res.render('map.ejs', { title : "Campus Map" });
 };
