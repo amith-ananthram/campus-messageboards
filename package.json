@@ -5,6 +5,8 @@
   "private": true,
   "dependencies": {
     "express": "4.x",
-    "ejs": "~0.8.5"
+    "ejs": "~0.8.5",
+    "mongodb": "*",
+    "mongoose": "*"
   }
 }

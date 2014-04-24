@@ -9,6 +9,8 @@ var express = require('express');
 
 var app = express();
 
+require('mongoose').connect(process.env.MONGOHQ_URL || 'mongodb://localhost/whiteboards')
+
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
