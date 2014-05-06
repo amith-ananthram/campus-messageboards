@@ -24,7 +24,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 //app.use(express.json());
 //app.use(express.urlencoded());
 app.use(express.bodyParser());
-//app.use(express.methodOverride());
+app.use(connect.methodOverride());
+app.use(connect.cookieParser());
+app.use(connect.session({'secret' : 'secret'}));
+
+var messages = require('./lib/messages');
+app.use(messages);
 
 /*
 	Pages needed:
@@ -49,12 +54,6 @@ app.post('/register', auth.registration.submit);
 app.get('/login', auth.authentication.form);
 app.post('/login', auth.authentication.submit);
 app.get('/logout', auth.authentication.logout);
-
-var messages = require('./lib/messages');
-app.use(connect.methodOverride());
-app.use(connect.cookieParser('your secret here'));
-app.use(connect.session());
-app.use(messages);
 
 // server listening on port 3000
 app.listen(app.get('port'), function() {

@@ -44,7 +44,7 @@ exports.submit = function(req, res, next) {
 						
 						console.log(user);
 
-						//req.session.uid = user.id;
+						req.session.uid = user.id;
 						res.redirect('/');
 					});
 				});

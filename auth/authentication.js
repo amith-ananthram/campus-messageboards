@@ -30,7 +30,7 @@ exports.submit = function(req, res, next) {
 				res.redirect('back');
 			}
 			else {
-				//req.seesion.uid = user.id;
+				req.session.uid = user.id;
 				res.redirect('/');
 			}
 		})
@@ -42,4 +42,4 @@ exports.logout = function(req, res) {
 		if (err) throw err;
 		res.redirect('/');
 	})
-};
+}
