@@ -41,22 +41,20 @@ app.use(messages);
 		'/whiteboards/:whiteboard_id' - join an existing whiteboard (get)
 		'/whiteboards/:whiteboard_id' - post to an existing whiteboard (post)
 */
-var whiteboard = require('./whiteboard');
-app.get('/', whiteboard.get_map);
-//app.post('/create_whiteboard', whiteboard.create_whiteboard);
-//app.get('/whiteboards/:whiteboard_id', whiteboard.access_whiteboard);
-//app.post('/whiteboards/:whiteboard_id', whiteboard.make_post);
-
-var auth = require('./auth');
+var routes = require('./routes');
+app.get('/', routes.get_map);
+//app.post('/create_whiteboard', routes.create_whiteboard);
+//app.get('/whiteboards/:whiteboard_id', routes.access_whiteboard);
+//app.post('/whiteboards/:whiteboard_id', routes.make_post);
 
 // user registration
-app.get('/register', auth.registration.form);
-app.post('/register', auth.registration.submit);
+app.get('/register', routes.auth.registration.form);
+app.post('/register', routes.auth.registration.submit);
 
 // user authentication
-app.get('/login', auth.authentication.form);
-app.post('/login', auth.authentication.submit);
-app.get('/logout', auth.authentication.logout);
+app.get('/login', routes.auth.authentication.form);
+app.post('/login', routes.auth.authentication.submit);
+app.get('/logout', routes.auth.authentication.logout);
 
 // server listening on port 3000
 app.listen(app.get('port'), function() {

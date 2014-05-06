@@ -1,4 +1,4 @@
-var db = require('../models')
+var db = require('../../models')
 
 // serves the registration form
 exports.form = function(req, res) {
