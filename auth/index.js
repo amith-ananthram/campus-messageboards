@@ -1,4 +1,5 @@
 var db = require('../models')
+var bcrypt = require('bcrypt')
 
 exports.form = function(req, res) {
 	res.render('register.ejs', { title: 'Register' });
@@ -12,23 +13,40 @@ exports.submit = function(req, res, next) {
 	db.User.find({'name': data.name}, function(err, users) {
 		if (err) throw err;
 
+		// if it already exists, try again!
 		if ( users.length > 0 ) {
 			res.error("Username already taken!");
 			res.redirect('back');
 		}
+		// otherwise save this new user
 		else {
-			var user = new db.User({
-				name: data.name,
-				password: data.pass
-			});
+			// first salt the password
+			bcrypt.genSalt(12, function(err, salt) {
+				if (err) throw err;
 
-			user.save(function(err, user) {
-				if (err) return next(err);
-				console.log(user);
+				// save the salt for later
+				data.salt = salt;
 
-				//req.session.uid = user.id;
-				res.redirect('/');
-			});
+				bcrypt.hash(data.pass, salt, function(err, hash) {
+					if (err) throw err;
+					
+					var user = new db.User({
+						name: data.name,
+						password: hash,
+						salt: data.salt
+					});
+
+					// save the user into Mongo
+					user.save(function(err, user) {
+						if (err) return next(err);
+						
+						console.log(user);
+
+						//req.session.uid = user.id;
+						res.redirect('/');
+					});
+				});
+			});			
 		}
 	});
 }

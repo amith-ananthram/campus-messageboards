@@ -24,6 +24,7 @@ var Schema = mongoose.Schema;
 var userSchema = Schema({
 	name: { type: String, require: true },
 	password: { type: String, require: true },
+	salt: { type: String, require: true} 
 	//date: { type: Date, require: true }
 });
 
