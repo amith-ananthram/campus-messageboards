@@ -24,29 +24,28 @@ var Schema = mongoose.Schema;
 var userSchema = Schema({
 	name: { type: String, require: true },
 	password: { type: String, require: true },
-	date: { type: Date, require: true }
+	//date: { type: Date, require: true }
 });
 
 var whiteboardSchema = Schema({
 	name: { type: String, require: true },
-	x_coordinate: { type: Double, require: true },
-	y_coordinate: { type: Double, require: true },
-	created_by: { type: Schema.Types.ObjectId, ref: 'User', require: true },
-	date: { type: Date, require: true },
-	current_users: [Schema.Types.ObjectId],
-	comments: [Schema.Types.ObjectId]
+	x_coordinate: { type: Number, require: true },
+	y_coordinate: { type: Number, require: true },
+	//created_by: { type: Schema.Types.ObjectId, ref: 'User', require: true },
+	//date: { type: Date, require: true },
+	//current_users: [Schema.Types.ObjectId],
+	//comments: [Schema.Types.ObjectId]
 });
 
 var commentSchema = Schema({
 	text: { type: String, require: true },
 	posted_by: { type: Schema.Types.ObjectId, ref: 'User', require: true },
 	whiteboard: { type: Schema.Types.ObjectId, ref: 'Whiteboard', require: true },
-	date: { type: Date, require: true },
-	time: { type: Timestamp, require: true }
+	date: { type: Date, require: true }
 });
 
 module.exports = {
 	User: mongoose.model('User', userSchema),
-	Whiteboard: mongoose.module('Whiteboard', whiteboardSchema),
-	Comment: mongoose.module('Comment', commentSchema)
+	Whiteboard: mongoose.model('Whiteboard', whiteboardSchema),
+	Comment: mongoose.model('Comment', commentSchema)
 }

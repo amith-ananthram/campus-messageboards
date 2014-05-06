@@ -6,6 +6,7 @@ var http = require('http');
 var path = require('path');
 //var socket = require('socket.io');
 var express = require('express');
+var connect = require('connect');
 
 var app = express();
 
@@ -22,7 +23,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //app.use(express.static(path.join(__dirname, 'public')));
 //app.use(express.json());
 //app.use(express.urlencoded());
-//app.use(express.bodyParser());
+app.use(express.bodyParser());
 //app.use(express.methodOverride());
 
 /*
@@ -42,3 +43,13 @@ app.get('/', whiteboard.get_map);
 app.listen(app.get('port'), function() {
 	console.log('Express server listening on port ' + app.get('port'))
 });
+
+var auth = require('./auth');
+app.get('/register', auth.form);
+app.post('/register', auth.submit);
+
+var messages = require('./lib/messages');
+app.use(connect.methodOverride());
+app.use(connect.cookieParser('your secret here'));
+app.use(connect.session());
+app.use(messages);

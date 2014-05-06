@@ -1,26 +1,20 @@
 <% include header.ejs %>
 
 <script type="text/javascript">
-	document.body.onload = function() { alert(current_whiteboards); }
+	var images = {};
 
 	/*
 		Pre-loads the images so they can be drawn in order.
 	*/
 	function loadImages() {
 		var sources = ["campus_map.png", "icon.png"]
-		var images = {};
 		var loadedImages = 0;
-
-		//alert(current_whiteboards);
-		//alert(current_whiteboards.length);
-
-		current_whiteboards = [[10, 1], [100, 100], [52, 70]];
 
 		for (var src in sources) {
 			images[src] = new Image();
 			images[src].onload = function() {
 				if(++loadedImages >= 2) {
-					draw(images, current_whiteboards);
+					drawImages();
 				}
 			};
 			images[src].src = sources[src];
@@ -28,9 +22,9 @@
 	}
 
 	/*
-		Draws the map and all the current whiteboard locations onto the canvas.
+		Draws the map and all the current chatroom locations onto the canvas.
 	*/
-	function draw(images, current_whiteboards) {
+	function drawImages() {
 		var canvas = document.getElementById('canvas');
 		var ctx = canvas.getContext('2d');
 
@@ -39,12 +33,9 @@
 
 		ctx.drawImage(images[0], 0, 0, window.innerWidth, window.innerHeight);
 
-		for (var i = 0; i < current_whiteboards.length; i++) {
-			var x = current_whiteboards[i][0];
-			var y = current_whiteboards[i][1];
-
-			ctx.drawImage(images[1], x + 10, y + 20, 20, 20);
-		}
+		//chatrooms.forEach(function(chatroom) { 
+		//	ctx.drawImage(images[1], chatroom.x_coordinate + 10, chatroom.y_coordinate + 20, 20, 20);
+		//}
 	}
 	</script>
 </head>
