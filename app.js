@@ -39,17 +39,24 @@ app.get('/', whiteboard.get_map);
 //app.get('/whiteboards/:whiteboard_id', whiteboard.access_whiteboard);
 //app.post('/whiteboards/:whiteboard_id', whiteboard.make_post);
 
-// server listening on port 3000
-app.listen(app.get('port'), function() {
-	console.log('Express server listening on port ' + app.get('port'))
-});
-
 var auth = require('./auth');
-app.get('/register', auth.form);
-app.post('/register', auth.submit);
+
+// user registration
+app.get('/register', auth.registration.form);
+app.post('/register', auth.registration.submit);
+
+// user authentication
+app.get('/login', auth.authentication.form);
+app.post('/login', auth.authentication.submit);
+app.get('/logout', auth.authentication.logout);
 
 var messages = require('./lib/messages');
 app.use(connect.methodOverride());
 app.use(connect.cookieParser('your secret here'));
 app.use(connect.session());
 app.use(messages);
+
+// server listening on port 3000
+app.listen(app.get('port'), function() {
+	console.log('Express server listening on port ' + app.get('port'))
+});
