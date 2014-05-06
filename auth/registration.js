@@ -1,5 +1,4 @@
 var db = require('../models')
-var bcrypt = require('bcrypt')
 
 // serves the registration form
 exports.form = function(req, res) {
@@ -22,33 +21,20 @@ exports.submit = function(req, res, next) {
 		}
 		// otherwise save this new user
 		else {
-			// first salt the password
-			bcrypt.genSalt(12, function(err, salt) {
-				if (err) throw err;
+			var user = new db.User({
+				name: data.name,
+				password: data.pass
+			});
 
-				// save the salt for later
-				data.salt = salt;
+			user.save(function(err, user) {
+				if (err) return next(err);
 
-				bcrypt.hash(data.pass, salt, function(err, hash) {
-					if (err) throw err;
-					
-					var user = new db.User({
-						name: data.name,
-						password: hash,
-						salt: data.salt
-					});
+				console.log(user);
 
-					// save the user into Mongo
-					user.save(function(err, user) {
-						if (err) return next(err);
-						
-						console.log(user);
-
-						req.session.uid = user.id;
-						res.redirect('/');
-					});
-				});
-			});			
+				req.session.uid = user.id;
+				req.user = res.locals.user = user.name;
+				res.redirect('/');
+			});	
 		}
 	});
 }

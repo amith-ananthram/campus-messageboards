@@ -28,6 +28,9 @@ app.use(connect.methodOverride());
 app.use(connect.cookieParser());
 app.use(connect.session({'secret' : 'secret'}));
 
+var user = require('./lib/user');
+app.use(user);
+
 var messages = require('./lib/messages');
 app.use(messages);
 

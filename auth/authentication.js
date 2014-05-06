@@ -9,31 +9,30 @@ exports.submit = function(req, res, next) {
 	var data = req.body.user;
 
 	// check to see if the user exists
-	db.User.find({'name': data.name}, function(err, users) {
+	db.User.findOne({'name': data.name}, function(err, user) {
 		if (err) throw err;
 
-		// if the username doesn't exist
-		if ( users.length == 0 ) {
+		// the username doesn't exist
+		if ( user == null ) {
 			res.error("Sorry!  Invalid username!");
 			res.redirect('back');
 		}
+		else {
+			// if it does exist, check the password
+			user.comparePassword(data.pass, function(err, isMatch) {
+				if (err) throw err;
 
-		// if it does exist, check the password
-		var user = users[0];
-
-		bcrypt.hash(data.pass, user.salt, function(err, hash) {
-			if (err) throw err;
-
-			// incorrect password
-			if ( hash != user.password ) {
-				res.error("Sorry!  Wrong password!");
-				res.redirect('back');
-			}
-			else {
-				req.session.uid = user.id;
-				res.redirect('/');
-			}
-		})
+				if ( isMatch ) {
+					req.session.uid = user.id;
+					req.user = res.locals.user = user.name;
+					res.redirect('/');
+				}
+				else {
+					res.error("Sorry!  Wrong password!");
+					res.redirect('back');
+				}
+			});	
+		}	
 	});
 }
 
