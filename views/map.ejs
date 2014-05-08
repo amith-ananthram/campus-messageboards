@@ -6,7 +6,7 @@
 	/*
 		Pre-loads the images so they can be drawn in order.
 	*/
-	function loadImages() {
+	function loadImages(messageboards) {
 		var sources = ["campus_map.png", "icon.png"]
 		var loadedImages = 0;
 
@@ -14,7 +14,7 @@
 			images[src] = new Image();
 			images[src].onload = function() {
 				if(++loadedImages >= 2) {
-					drawImages();
+					drawImages(messageboards);
 				}
 			};
 			images[src].src = sources[src];
@@ -24,7 +24,7 @@
 	/*
 		Draws the map and all the current messageboard locations onto the canvas.
 	*/
-	function drawImages() {
+	function drawImages(messageboards) {
 		var canvas = document.getElementById('canvas');
 		var ctx = canvas.getContext('2d');
 
@@ -33,14 +33,21 @@
 
 		ctx.drawImage(images[0], 0, 0, window.innerWidth, window.innerHeight);
 
-		//messageboards.forEach(function(messageboard) { 
-		//	ctx.drawImage(images[1], messageboard.x_coordinate + 10, messageboard.y_coordinate + 20, 20, 20);
-		//}
+		for (var i = 0; i < messageboards.length; i++) {
+			var messageboard = messageboards[i];
+
+			ctx.drawImage(images[1], messageboard.x_coordinate * window.innerWidth, messageboard.y_coordinate * window.innerHeight, 20, 20);
+		}
+	}
+
+	var canvas = document.getElementById('canvas');
+	canvas.onClick = function() {
+		alert("CLICK");
 	}
 	</script>
 </head>
 
-<body onload="loadImages();">
+<body onload="loadImages(<%= messageboards %>);">
   <% include menu %>
 	<canvas id="canvas"></canvas>
 
