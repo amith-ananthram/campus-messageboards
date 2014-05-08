@@ -4,7 +4,7 @@
 			- name
 			- password
 			- date created
-		2) Whiteboard
+		2) Messageboard
 			- name
 			- location (x, y)
 			- created by whom
@@ -14,7 +14,7 @@
 		3) Comment
 			- comment text
 			- user who created it
-			- whiteboard its associated with
+			- messageboard its associated with
 			- date & time of post
 */
 
@@ -58,7 +58,7 @@ userSchema.methods.comparePassword = function(candidatePassword, cb) {
 	});
 };
 
-var whiteboardSchema = Schema({
+var messageboardSchema = Schema({
 	name: { type: String, require: true },
 	x_coordinate: { type: Number, require: true },
 	y_coordinate: { type: Number, require: true },
@@ -71,12 +71,12 @@ var whiteboardSchema = Schema({
 var commentSchema = Schema({
 	text: { type: String, require: true },
 	posted_by: { type: Schema.Types.ObjectId, ref: 'User', require: true },
-	whiteboard: { type: Schema.Types.ObjectId, ref: 'Whiteboard', require: true },
+	messageboard: { type: Schema.Types.ObjectId, ref: 'Messageboard', require: true },
 	date: { type: Date, require: true }
 });
 
 module.exports = {
 	User: mongoose.model('User', userSchema),
-	Whiteboard: mongoose.model('Whiteboard', whiteboardSchema),
+	Messageboard: mongoose.model('Messageboard', messageboardSchema),
 	Comment: mongoose.model('Comment', commentSchema)
 }

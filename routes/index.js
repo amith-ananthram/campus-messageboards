@@ -1,6 +1,6 @@
 exports.auth = require('./auth');
 
 exports.get_map = require('./get_map');
-exports.create_whiteboard = require('./create_whiteboard');
-exports.access_whiteboard = require('./access_whiteboard');
+exports.create_messageboard = require('./create_messageboard');
+exports.access_messageboard = require('./access_messageboard');
 exports.make_post = require('./make_post');

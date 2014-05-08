@@ -47,10 +47,10 @@ module.exports = function(req, res) {
 
 	// finds all the current whiteboards and passes it to the
 	// the campus map to be rendered
-	db.Whiteboard.find().exec(function(err, chatrooms) {
+	db.Messageboard.find().exec(function(err, messageboards) {
 		if (err) throw err;
 
-		res.render('map.ejs', { title: "Campus Map", chatrooms : chatrooms })
+		res.render('map.ejs', { title: "Campus Map", messageboards : messageboards })
 	});
 	
 	//var current_whiteboards = [[10, 1], [100, 100], [52, 70]];

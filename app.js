@@ -11,7 +11,7 @@ var connect = require('connect');
 var app = express();
 
 var mongoose = require('mongoose');
-var db = mongoose.connect(process.env.MONGOHQ_URL || 'mongodb://localhost/whiteboards')
+var db = mongoose.connect(process.env.MONGOHQ_URL || 'mongodb://localhost/messageboards')
 
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
@@ -37,15 +37,15 @@ app.use(messages);
 /*
 	Pages needed:
 		'/'	-	the campus map (get)
-		'/create_whiteboard' - create a new whiteboard (post)
-		'/whiteboards/:whiteboard_id' - join an existing whiteboard (get)
-		'/whiteboards/:whiteboard_id' - post to an existing whiteboard (post)
+		'/create_messageboard' - create a new messageboard (post)
+		'/messageboards/:messageboard_id' - join an existing messageboard (get)
+		'/messageboards/:messageboard_id' - post to an existing messageboard (post)
 */
 var routes = require('./routes');
 app.get('/', routes.get_map);
-//app.post('/create_whiteboard', routes.create_whiteboard);
-//app.get('/whiteboards/:whiteboard_id', routes.access_whiteboard);
-//app.post('/whiteboards/:whiteboard_id', routes.make_post);
+//app.post('/create_messageboard', routes.create_messageboard);
+//app.get('/messageboards/:messageboard_id', routes.access_messageboard);
+//app.post('/messageboards/:messageboard_id', routes.make_post);
 
 // user registration
 app.get('/register', routes.auth.registration.form);
@@ -55,6 +55,10 @@ app.post('/register', routes.auth.registration.submit);
 app.get('/login', routes.auth.authentication.form);
 app.post('/login', routes.auth.authentication.submit);
 app.get('/logout', routes.auth.authentication.logout);
+
+app.get('/board', function(req, res) {
+	res.render('messageboard', {title : "Message Board"});
+});
 
 // server listening on port 3000
 app.listen(app.get('port'), function() {
