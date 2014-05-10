@@ -1,7 +1,7 @@
 /*
-access_messageboard.js needs to query the database for all the posts on the given messageboard
-
-It then loads them onto the messageboard view.
+access_messageboard.js finds the messageboard whose id is passed in with its parameters,
+and renders all of the posts associated with that messageboard to the messageboard
+template.
 */
 var db = require('../models')
 
@@ -10,7 +10,7 @@ module.exports = function(req, res) {
 	db.Messageboard.findOne({ '_id' : req.params.messageboard_id }, function(err, board) {
 		if (err) throw err;
 
-		// find the associated comments
+		// find the associated posts
 		db.Comment.find({ 'messageboard' : req.params.messageboard_id }, function(err, posts) {
 			if (err) throw err;
 

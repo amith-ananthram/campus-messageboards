@@ -1,4 +1,7 @@
 /*
+	This file defines the three object models we'll be using and
+	their relevant parameters.
+
 	Three main models required:
 		1) User
 			- name
@@ -16,14 +19,23 @@
 			- date & time of post
 */
 
+/*
+	Mongoose schema are object models for the underlying mongodb.
+*/
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+
+/*
+	bcrypt allows easy hashing & salting of user passwords to prevent
+	things like rainbow table attacks
+*/
 var bcrypt = require('bcrypt');
 var SALT_WORK_FACTOR = 10;
 
 var userSchema = Schema({
 	name: { type: String, require: true },
-	password: { type: String, require: true }
+	password: { type: String, require: true },
+	date: { type: Date, require: true }
 });
 
 // middleware that automatically hashes the password
@@ -49,6 +61,8 @@ userSchema.pre('save', function(next) {
 	})
 });
 
+// a function that compares an inputted password
+// to a saved password, using the appropriate salt, etc
 userSchema.methods.comparePassword = function(candidatePassword, cb) {
 	bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
 		if (err) return cb(err);
@@ -73,6 +87,10 @@ var commentSchema = Schema({
 	date: { type: Date, require: true }
 });
 
+/*
+	The various schema defined above can be renamed below, where we expose
+	them to the rest of the application through module.exports.  
+*/
 module.exports = {
 	User: mongoose.model('User', userSchema),
 	Messageboard: mongoose.model('Messageboard', messageboardSchema),

@@ -23,13 +23,12 @@ exports.submit = function(req, res, next) {
 		else {
 			var user = new db.User({
 				name: data.name,
-				password: data.pass
+				password: data.pass,
+				date: new Date()
 			});
 
 			user.save(function(err, user) {
 				if (err) return next(err);
-
-				console.log(user);
 
 				req.session.uid = user.id;
 				req.user = res.locals.user = user.name;

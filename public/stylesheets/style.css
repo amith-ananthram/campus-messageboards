@@ -9,3 +9,7 @@ body {
 #menu a {
 	text-decoration: none;
 }
+
+.error {
+	color: red;
+}
