@@ -12,6 +12,8 @@ module.exports = function(req, res) {
 
 		// find the associated comments
 		db.Comment.find({ 'messageboard' : req.params.messageboard_id }, function(err, posts) {
+			if (err) throw err;
+
 			res.render('messageboard.ejs', { title: board.name, messageboard_id : req.params.messageboard_id, posts : posts });
 		});
 	});

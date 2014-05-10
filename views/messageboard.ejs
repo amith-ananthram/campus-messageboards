@@ -4,9 +4,18 @@
 	<% include menu %>
 
 	<div id='content'>
-		<div id='messages'></div>
+		<div id='messages'>
+			<% posts.forEach( function(post) { %>
+				<div class='message'>
+					<%= post.posted_by_name + ": " %>
+					<br>
+					<%= post.text %>
+					<br>
+				</div>
+			<% }); %>
+		</div>
 
-	<form action=<%='/messageboards/' + messageboard_id %> method='/post'>
+	<form action=<%='/messageboards/' + messageboard_id %> method='post'>
 		<p>
 		<input type='text' name='message' />
 		</p>

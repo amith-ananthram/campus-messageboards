@@ -9,8 +9,6 @@
 			- location (x, y)
 			- created by whom
 			- date created
-			- list of users currently participating
-			- list of comments
 		3) Comment
 			- comment text
 			- user who created it
@@ -63,14 +61,13 @@ var messageboardSchema = Schema({
 	x_coordinate: { type: Number, require: true },
 	y_coordinate: { type: Number, require: true },
 	//created_by: { type: Schema.Types.ObjectId, ref: 'User', require: true },
-	//date: { type: Date, require: true },
-	//current_users: [Schema.Types.ObjectId],
-	//comments: [Schema.Types.ObjectId]
+	//date: { type: Date, require: true }
 });
 
 var commentSchema = Schema({
 	text: { type: String, require: true },
-	posted_by: { type: Schema.Types.ObjectId, ref: 'User', require: true },
+	posted_by_id: { type: Schema.Types.ObjectId, ref: 'User', require: true },
+	posted_by_name: { type: String, require: true },
 	messageboard: { type: Schema.Types.ObjectId, ref: 'Messageboard', require: true },
 	date: { type: Date, require: true }
 });

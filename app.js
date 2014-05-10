@@ -44,8 +44,8 @@ app.use(messages);
 var routes = require('./routes');
 app.get('/', routes.get_map);
 //app.post('/create_messageboard', routes.create_messageboard);
-app.post('/messageboards/:messageboard_id/:message', routes.make_post);
 app.get('/messageboards/:messageboard_id', routes.access_messageboard);
+app.post('/messageboards/:messageboard_id', routes.make_post);
 
 // user registration
 app.get('/register', routes.auth.registration.form);
