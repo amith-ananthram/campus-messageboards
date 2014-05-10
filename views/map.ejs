@@ -58,6 +58,8 @@
     		var x = e.pageX - this.offsetLeft;
     		var y = e.pageY - this.offsetTop;
 
+    		var exists = false;
+
     		// cycle through all the messageboards and see
     		// if the x and y match any current board
     		for (var i = 0; i < messageboards.length; i++) {
@@ -69,11 +71,14 @@
     			// if it does, redirect to that board
     			if ( messageboardX <= x && x <= messageboardX + 20 &&
     				 messageboardY <= y && y <= messageboardY + 20 ) {
+    				exists = true;
     				window.location = './messageboards/' + encodeURIComponent(messageboard._id);
     			}
     		}
 
     		// otherwise redirect to the messageboard creation screen
+    		if ( !exists ) 
+    			window.location = './create_messageboard/' + encodeURIComponent((x-10)/window.innerWidth) + "/" + encodeURIComponent((y-20)/window.innerHeight);
 	   	});
 	});
 	</script>

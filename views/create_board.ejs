@@ -1,0 +1,21 @@
+<% include header.ejs %>
+
+</head>
+<body>
+  <% include menu %>
+
+  <h1><%= title %></h1>
+  <p>Fill in the form below to create a new messageboard</p>
+
+  <% include messages %>
+
+  <form action=<%= "/create_messageboard/" + x_coordinate + "/" + y_coordinate %>  method='post'>
+    <p>
+      <input type='text' name='name' placeholder='Name' />
+    </p>
+    <p>
+      <input type='submit' value='Create' />
+    </p>
+  </form>
+
+<% include footer.ejs %>

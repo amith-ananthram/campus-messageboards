@@ -37,13 +37,21 @@ app.use(messages);
 /*
 	Pages needed:
 		'/'	-	the campus map (get)
+		'/create_messsageboard' - renders the form (get)
 		'/create_messageboard' - create a new messageboard (post)
 		'/messageboards/:messageboard_id' - join an existing messageboard (get)
 		'/messageboards/:messageboard_id' - post to an existing messageboard (post)
 */
 var routes = require('./routes');
+
+// serves the map
 app.get('/', routes.get_map);
-//app.post('/create_messageboard', routes.create_messageboard);
+
+// form for creating messageboards (and the subsequent post)
+app.get('/create_messageboard/:x_coordinate/:y_coordinate', routes.create_messageboard.form);
+app.post('/create_messageboard/:x_coordinate/:y_coordinate', routes.create_messageboard.submit);
+
+// accessing messageboards and making posts
 app.get('/messageboards/:messageboard_id', routes.access_messageboard);
 app.post('/messageboards/:messageboard_id', routes.make_post);
 
