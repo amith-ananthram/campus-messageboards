@@ -6,10 +6,15 @@
 	<div id='content'>
 		<div id='messages'></div>
 
-	<form id='send-form'>
-		<input id='post-message' />
-		<input id='send-button' type='submit' value='Post'/>
+	<form action=<%='/messageboards/' + messageboard_id %> method='/post'>
+		<p>
+		<input type='text' name='message' />
+		</p>
+		<p>
+		<input id='send-button' type='submit' />
+		</p>
 	</form>
+
 	</div>
 
 <% include footer.ejs %>

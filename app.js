@@ -44,8 +44,8 @@ app.use(messages);
 var routes = require('./routes');
 app.get('/', routes.get_map);
 //app.post('/create_messageboard', routes.create_messageboard);
-//app.get('/messageboards/:messageboard_id', routes.access_messageboard);
-//app.post('/messageboards/:messageboard_id', routes.make_post);
+app.post('/messageboards/:messageboard_id/:message', routes.make_post);
+app.get('/messageboards/:messageboard_id', routes.access_messageboard);
 
 // user registration
 app.get('/register', routes.auth.registration.form);
@@ -55,10 +55,6 @@ app.post('/register', routes.auth.registration.submit);
 app.get('/login', routes.auth.authentication.form);
 app.post('/login', routes.auth.authentication.submit);
 app.get('/logout', routes.auth.authentication.logout);
-
-app.get('/board', function(req, res) {
-	res.render('messageboard', {title : "Message Board"});
-});
 
 // server listening on port 3000
 app.listen(app.get('port'), function() {

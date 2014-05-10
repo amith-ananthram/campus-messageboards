@@ -1,0 +1,11 @@
+body {
+	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+#menu {
+	color: #888;
+}
+
+#menu a {
+	text-decoration: none;
+}

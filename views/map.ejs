@@ -1,7 +1,12 @@
 <% include header.ejs %>
 
 <script type="text/javascript">
+    document.write("\<script src='http://code.jquery.com/jquery-latest.min.js' type='text/javascript'>\<\/script>");
+</script>
+
+<script type="text/javascript">
 	var images = {};
+	var messageboards = [];
 
 	/*
 		Pre-loads the images so they can be drawn in order.
@@ -10,11 +15,14 @@
 		var sources = ["campus_map.png", "icon.png"]
 		var loadedImages = 0;
 
+		// save the messageboards globally so they're accessible elsewhere
+		this.messageboards = messageboards;
+
 		for (var src in sources) {
 			images[src] = new Image();
 			images[src].onload = function() {
 				if(++loadedImages >= 2) {
-					drawImages(messageboards);
+					drawImages();
 				}
 			};
 			images[src].src = sources[src];
@@ -24,7 +32,7 @@
 	/*
 		Draws the map and all the current messageboard locations onto the canvas.
 	*/
-	function drawImages(messageboards) {
+	function drawImages() {
 		var canvas = document.getElementById('canvas');
 		var ctx = canvas.getContext('2d');
 
@@ -40,10 +48,34 @@
 		}
 	}
 
-	var canvas = document.getElementById('canvas');
-	canvas.onClick = function() {
-		alert("CLICK");
-	}
+	/*
+		Deals with click events on the canvas.  If the user clicks on a messageboard icon, it goes to that messageboard.  Otherwise, it goes
+		to a page that allows them to create a new messageboard if they want.
+	*/
+	$('document').ready(function() {
+    	$("#canvas").click(function(e){
+    		// get the x and y coordinates of the click
+    		var x = e.pageX - this.offsetLeft;
+    		var y = e.pageY - this.offsetTop;
+
+    		// cycle through all the messageboards and see
+    		// if the x and y match any current board
+    		for (var i = 0; i < messageboards.length; i++) {
+    			var messageboard = messageboards[i];
+
+    			var messageboardX = messageboard.x_coordinate*window.innerWidth;
+    			var messageboardY = messageboard.y_coordinate*window.innerHeight;
+
+    			// if it does, redirect to that board
+    			if ( messageboardX <= x && x <= messageboardX + 20 &&
+    				 messageboardY <= y && y <= messageboardY + 20 ) {
+    				window.location = './messageboards/' + encodeURIComponent(messageboard._id);
+    			}
+    		}
+
+    		// otherwise redirect to the messageboard creation screen
+	   	});
+	});
 	</script>
 </head>
 
