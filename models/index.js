@@ -43,22 +43,24 @@ var userSchema = Schema({
 userSchema.pre('save', function(next) {
 	var user = this;
 
-	// only hash the pass if it's been modified/it's new
-	if (!user.isModified('password')) return next();
+	// only hash the password if we are creating the user
+	if (user.isNew) {
+    	// generate a salt
+    	bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
+    		if (err) return next(err);
 
-	// generate a salt
-	bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
-		if (err) return next(err);
+     		// hash the password along w our new salt
+     		bcrypt.hash(user.password, salt, function(err, hash) {
+     			if (err) return next(err);
 
-		// hash the password along w our new salt
-		bcrypt.hash(user.password, salt, function(err, hash) {
-			if (err) return next(err);
-
-			// override the understandable password with its hash
-			user.password = hash;
-			next();
-		})
-	})
+ 			    // override the understandable password with its hash
+     			user.password = hash;
+     			next();
+     		});
+     	});
+    } else {
+    	next();
+    }
 });
 
 // a function that compares an inputted password
