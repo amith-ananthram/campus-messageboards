@@ -9,7 +9,7 @@
 
   <% include messages %>
 
-  <form action=<%= "/create_messageboard/" + x_coordinate + "/" + y_coordinate %>  method='post'>
+  <form action=<%= "/create_messageboard?x=" + x_coordinate + "&y=" + y_coordinate %>  method='post'>
     <p>
       <input type='text' name='name' placeholder='Name' />
     </p>

@@ -78,7 +78,7 @@
 
     		// otherwise redirect to the messageboard creation screen
     		if ( !exists ) 
-    			window.location = './create_messageboard/' + encodeURIComponent((x-10)/window.innerWidth) + "/" + encodeURIComponent((y-20)/window.innerHeight);
+    			window.location = './create_messageboard?x=' + encodeURIComponent((x-10)/window.innerWidth) + "&y=" + encodeURIComponent((y-20)/window.innerHeight);
 	   	});
 	});
 	</script>
