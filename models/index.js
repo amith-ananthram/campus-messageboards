@@ -26,11 +26,10 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 /*
-	bcrypt allows easy hashing & salting of user passwords to prevent
-	things like rainbow table attacks
+	bcrypt allows easy hashing of passwords
 */
 var bcrypt = require('bcrypt');
-var SALT_WORK_FACTOR = 10;
+SALT_ROUNDS = 10;
 
 var userSchema = Schema({
 	name: { type: String, require: true },
@@ -45,19 +44,15 @@ userSchema.pre('save', function(next) {
 
 	// only hash the password if we are creating the user
 	if (user.isNew) {
-    	// generate a salt
-    	bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
-    		if (err) return next(err);
+ 
+   		// hash the password 
+   		bcrypt.hash(user.password, SALT_ROUNDS, function(err, hash) {
+   			if (err) return next(err);
 
-     		// hash the password along w our new salt
-     		bcrypt.hash(user.password, salt, function(err, hash) {
-     			if (err) return next(err);
-
- 			    // override the understandable password with its hash
-     			user.password = hash;
-     			next();
-     		});
-     	});
+		    // use the hash instead of the plaintext password
+   			user.password = hash;
+   			next();
+   		});
     } else {
     	next();
     }
@@ -66,10 +61,7 @@ userSchema.pre('save', function(next) {
 // a function that compares an inputted password
 // to a saved password, using the appropriate salt, etc
 userSchema.methods.comparePassword = function(candidatePassword, cb) {
-	bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
-		if (err) return cb(err);
-		cb(null, isMatch);
-	});
+	bcrypt.compare(candidatePassword, this.password, cb);
 };
 
 var messageboardSchema = Schema({
