@@ -18,7 +18,6 @@ exports.submit = function(req, res, next) {
 				x_coordinate : req.params.x_coordinate,
 				y_coordinate : req.params.y_coordinate,
 				created_by_id : req.user._id,
-				created_by_name : req.user.name,
 				date : new Date()
 			});
 

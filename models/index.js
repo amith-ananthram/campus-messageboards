@@ -75,7 +75,6 @@ var messageboardSchema = Schema({
 	x_coordinate: { type: Number, require: true },
 	y_coordinate: { type: Number, require: true },
 	created_by_id: { type: Schema.Types.ObjectId, ref: 'User', require: true },
-	created_by_name: { type: String, require: true },
 	date: { type: Date, require: true }
 });
 
