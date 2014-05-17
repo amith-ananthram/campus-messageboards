@@ -85,6 +85,9 @@ app.get('/login', routes.auth.authentication.form);
 app.post('/login', routes.auth.authentication.submit);
 app.get('/logout', routes.auth.authentication.logout);
 
+//site help
+app.get('/how_it_works', routes.how_it_works);
+
 // server listening on port 3000
 app.listen(app.get('port'), function() {
 	console.log('Express server listening on port ' + app.get('port'))

@@ -1,13 +1,12 @@
 	<a href="/"><img src="logo.png" alt="Dartmouth" height="50" width="50" align="left" style="padding-right:10px; padding-bottom:10px;"/></a>
 	<br><tab>
-<% if (locals.user) { %>
   <div id='menu'>
+  <% if (locals.user) { %>
     <span class='name'><%= user.name %></span>
-      <a href='/logout'>logout</a>
-  </div>
-<% } else { %>
-  <div id='menu'>
+    <a href='/logout'>logout</a>
+  <% } else { %>
     <a href='/login'>login</a>
     <a href='/register'>register</a>
+  <% } %>
+    <a href='/how_it_works'>how it works</a>
   </div>
-<% } %>
