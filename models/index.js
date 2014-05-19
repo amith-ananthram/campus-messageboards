@@ -29,7 +29,7 @@ var Schema = mongoose.Schema;
 	bcrypt allows easy hashing of passwords
 */
 var bcrypt = require('bcrypt');
-SALT_ROUNDS = 10;
+SALT_WORK_FACTOR = 10;
 
 var userSchema = Schema({
 	name: { type: String, require: true },
@@ -42,11 +42,11 @@ var userSchema = Schema({
 userSchema.pre('save', function(next) {
 	var user = this;
 
-	// only hash the password if we are creating the user
-	if (user.isNew) {
+	// only hash the password if the password has been set
+	if (user.isModified('password')) {
  
    		// hash the password 
-   		bcrypt.hash(user.password, SALT_ROUNDS, function(err, hash) {
+   		bcrypt.hash(user.password, SALT_WORK_FACTOR, function(err, hash) {
    			if (err) return next(err);
 
 		    // use the hash instead of the plaintext password
@@ -58,10 +58,10 @@ userSchema.pre('save', function(next) {
     }
 });
 
-// a function that compares an inputted password
-// to a saved password, using the appropriate salt, etc
-userSchema.methods.comparePassword = function(candidatePassword, cb) {
-	bcrypt.compare(candidatePassword, this.password, cb);
+// compare an inputed password to a users password
+// callback has signature function(err, doesMatch)
+userSchema.methods.comparePassword = function(candidatePassword, callback) {
+	bcrypt.compare(candidatePassword, this.password, callback);
 };
 
 var messageboardSchema = Schema({
