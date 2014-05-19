@@ -1,4 +1,3 @@
-
 /*
 	Required modules.
 
@@ -70,8 +69,8 @@ var routes = require('./routes');
 app.get('/', routes.get_map);
 
 // form for creating messageboards (and the subsequent post)
-app.get('/create_messageboard/:x_coordinate/:y_coordinate', routes.create_messageboard.form);
-app.post('/create_messageboard/:x_coordinate/:y_coordinate', routes.create_messageboard.submit);
+app.get('/create_messageboard', routes.create_messageboard.form);
+app.post('/create_messageboard', routes.create_messageboard.submit);
 
 // accessing messageboards and making posts
 app.get('/messageboards/:messageboard_id', routes.access_messageboard);

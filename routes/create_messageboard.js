@@ -3,8 +3,7 @@ var db = require('../models');
 exports.form = function(req, res) {
 	// finds all the current whiteboards and passes it to the
 	// the campus map to be rendered
-	
-	res.render('create_board.ejs', { title: "Create a New Message Board", x_coordinate: req.params.x_coordinate, y_coordinate: req.params.y_coordinate } );
+	res.render('create_board.ejs', { title: "Create a New Message Board", x_coordinate: req.query.x, y_coordinate: req.query.y } );
 };
 
 exports.submit = function(req, res, next) {
@@ -15,8 +14,8 @@ exports.submit = function(req, res, next) {
 			// create a new message board from the content
 			var board = new db.Messageboard({
 				name : req.body.name,
-				x_coordinate : req.params.x_coordinate,
-				y_coordinate : req.params.y_coordinate,
+				x_coordinate : req.query.x,
+				y_coordinate : req.query.y,
 				created_by_id : req.user._id,
 				date : new Date()
 			});
