@@ -81,7 +81,7 @@ app.get('/register', routes.auth.registration.form);
 app.post('/register', routes.auth.registration.submit);
 
 // user authentication
-app.get('/login', routes.auth.authentication.form);
+app.get('/login', routes.auth.authentication.login);
 app.post('/login', routes.auth.authentication.submit);
 app.get('/logout', routes.auth.authentication.logout);
 

@@ -1,7 +1,8 @@
 var db = require('../../models')
 var bcrypt = require('bcrypt')
 
-exports.form = function(req, res) {
+
+exports.login = function(req, res) {
 	res.render('login', { title: 'Login' });
 };
 
