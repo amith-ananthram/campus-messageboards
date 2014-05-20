@@ -6,16 +6,15 @@ exports.form = function(req, res) {
 };
 
 // deals with submissions of the registration form
-exports.submit = function(req, res, next) {
+exports.submit = function(req, res) {
 	var data = req.body.user;
 
 	// check to see if the given user already exists
-
-	db.User.find({'name': data.name}, function(err, users) {
+	db.User.findOne({'name': data.name}, function(err, user) {
 		if (err) throw err;
-
+		
 		// if it already exists, try again!
-		if ( users.length > 0 ) {
+		if ( user ) {
 			res.error("Username already taken!");
 			res.redirect('back');
 		}
@@ -28,7 +27,7 @@ exports.submit = function(req, res, next) {
 			});
 
 			user.save(function(err, user) {
-				if (err) return next(err);
+				if (err) throw err;
 
 				req.session.uid = user.id;
 				req.user = res.locals.user = user.name;

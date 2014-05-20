@@ -6,7 +6,7 @@ exports.login = function(req, res) {
 	res.render('login', { title: 'Login' });
 };
 
-exports.submit = function(req, res, next) {
+exports.submit = function(req, res) {
 
 	// the login form saves information in the 'user' property
 	var data = req.body.user;
