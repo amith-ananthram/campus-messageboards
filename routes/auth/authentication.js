@@ -7,6 +7,8 @@ exports.login = function(req, res) {
 };
 
 exports.submit = function(req, res, next) {
+
+	// the login form saves information in the 'user' property
 	var data = req.body.user;
 
 	// check to see if the user exists
@@ -14,22 +16,20 @@ exports.submit = function(req, res, next) {
 		if (err) throw err;
 
 		// the username doesn't exist
-		if ( user == null ) {
-			res.error("Sorry!  Invalid username!");
+		if (!user) {
+			res.error("Sorry! Invalid username!");
 			res.redirect('back');
-		}
-		else {
+		} else {
 			// if it does exist, check the password
 			user.comparePassword(data.pass, function(err, isMatch) {
 				if (err) throw err;
 
 				if ( isMatch ) {
 					req.session.uid = user.id;
-					req.user = res.locals.user = user.name;
 					res.redirect('/');
 				}
 				else {
-					res.error("Sorry!  Wrong password!");
+					res.error("Sorry! Wrong password!");
 					res.redirect('back');
 				}
 			});	
