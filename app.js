@@ -49,11 +49,8 @@ app.use(connect.session({'secret' : 'secret'}));
 	For this application, we build two pieces of middleware, stored in the /lib/ folder.
 */
 
-var user = require('./lib/user');
-app.use(user);
-
-var messages = require('./lib/messages');
-app.use(messages);
+app.use(require('./lib/user'));
+app.use(require('./lib/messages'));
 
 /*
 	Pages needed:
