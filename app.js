@@ -32,6 +32,7 @@ var db = mongoose.connect(process.env.MONGOHQ_URL || 'mongodb://localhost/messag
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+app.use(connect.logger('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded());
@@ -51,6 +52,8 @@ app.use(connect.session({'secret' : 'secret'}));
 
 app.use(require('./lib/user'));
 app.use(require('./lib/messages'));
+
+app.use(connect.errorHandler());
 
 /*
 	Pages needed:

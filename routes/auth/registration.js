@@ -12,9 +12,9 @@ exports.submit = function(req, res) {
 	// check to see if the given user already exists
 	db.User.findOne({'name': data.name}, function(err, user) {
 		if (err) throw err;
-		
+
 		// if it already exists, try again!
-		if ( user ) {
+		if (user) {
 			res.error("Username already taken!");
 			res.redirect('back');
 		}

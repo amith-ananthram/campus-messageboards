@@ -15,7 +15,7 @@ exports.submit = function(req, res) {
 	db.User.findOne({'name': data.name}, function(err, user) {
 		if (err) throw err;
 
-		// the username doesn't exist
+		// the username does not exist
 		if (!user) {
 			res.error("Sorry! Invalid username!");
 			res.redirect('back');
@@ -24,11 +24,10 @@ exports.submit = function(req, res) {
 			user.comparePassword(data.pass, function(err, isMatch) {
 				if (err) throw err;
 
-				if ( isMatch ) {
+				if (isMatch) {
 					req.session.uid = user.id;
 					res.redirect('/');
-				}
-				else {
+				} else {
 					res.error("Sorry! Wrong password!");
 					res.redirect('back');
 				}
